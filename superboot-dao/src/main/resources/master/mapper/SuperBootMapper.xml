@@ -1,0 +1,367 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zhenmin.superboot.dao.master.repository.XmInsuranceMapper" >
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.zhenmin.superboot.dao.master.entity.SuperBootEntity" >
+    update t_srv_xminsurance
+    <set >
+      <if test="orderId != null" >
+        order_id = #{orderId,jdbcType=BIGINT},
+      </if>
+      <if test="goodsUniquecode != null" >
+        goods_uniquecode = #{goodsUniquecode,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="userName != null" >
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="userTel != null" >
+        user_tel = #{userTel,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsName != null" >
+        goods_name = #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsSku != null" >
+        goods_sku = #{goodsSku,jdbcType=INTEGER},
+      </if>
+      <if test="goodsPrice != null" >
+        goods_price = #{goodsPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="insureUniquecode != null" >
+        insure_uniquecode = #{insureUniquecode,jdbcType=VARCHAR},
+      </if>
+      <if test="insureSku != null" >
+        insure_sku = #{insureSku,jdbcType=INTEGER},
+      </if>
+      <if test="insurePrice != null" >
+        insure_price = #{insurePrice,jdbcType=DECIMAL},
+      </if>
+      <if test="insurePeriod != null" >
+        insure_period = #{insurePeriod,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sumInsured != null" >
+        sum_insured = #{sumInsured,jdbcType=DECIMAL},
+      </if>
+      <if test="premium != null" >
+        premium = #{premium,jdbcType=DECIMAL},
+      </if>
+      <if test="tradeCode != null" >
+        trade_code = #{tradeCode,jdbcType=BIGINT},
+      </if>
+      <if test="insureType != null" >
+        insure_type = #{insureType,jdbcType=TINYINT},
+      </if>
+      <if test="insureStatus != null" >
+        insure_status = #{insureStatus,jdbcType=TINYINT},
+      </if>
+      <if test="payDate != null" >
+        pay_date = #{payDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orderDate != null" >
+        order_date = #{orderDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="outDate != null" >
+        out_date = #{outDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="triggerDate != null" >
+        trigger_date = #{triggerDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="saleChannel != null" >
+        sale_channel = #{saleChannel,jdbcType=INTEGER},
+      </if>
+      <if test="insureStartDate != null" >
+        insure_start_date = #{insureStartDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="insureEndDate != null" >
+        insure_end_date = #{insureEndDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sapDate != null" >
+        sap_date = #{sapDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="evidenceNo != null" >
+        evidence_no = #{evidenceNo,jdbcType=VARCHAR},
+      </if>
+      <if test="originOrderId != null" >
+        origin_order_id = #{originOrderId,jdbcType=BIGINT},
+      </if>
+      <if test="originGoodsUniquecode != null" >
+        origin_goods_uniquecode = #{originGoodsUniquecode,jdbcType=VARCHAR},
+      </if>
+      <if test="pid != null" >
+        pid = #{pid,jdbcType=BIGINT},
+      </if>
+      <if test="productType != null" >
+        product_type = #{productType,jdbcType=INTEGER},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="insurePerson != null" >
+        insure_person = #{insurePerson,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="insuredPerson != null" >
+        insured_person = #{insuredPerson,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="insureResponse != null" >
+        insure_response = #{insureResponse,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="restSumInsured != null" >
+        rest_sum_insured = #{restSumInsured},
+      </if>
+      <if test="repairTimes != null" >
+        repair_times = #{repairTimes},
+      </if>
+      <if test="repairFee != null" >
+        repair_fee = #{repairFee},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+    <insert id="insertSelective" parameterType="com.zhenmin.superboot.dao.master.entity.SuperBootEntity" >
+
+        insert into t_srv_xminsurance
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                id,
+            </if>
+            <if test="orderId != null" >
+                order_id,
+            </if>
+            <if test="goodsUniquecode != null" >
+                goods_uniquecode,
+            </if>
+            <if test="userId != null" >
+                user_id,
+            </if>
+            <if test="userName != null" >
+                user_name,
+            </if>
+            <if test="userTel != null" >
+                user_tel,
+            </if>
+            <if test="goodsName != null" >
+                goods_name,
+            </if>
+            <if test="goodsSku != null" >
+                goods_sku,
+            </if>
+            <if test="goodsPrice != null" >
+                goods_price,
+            </if>
+            <if test="insureUniquecode != null" >
+                insure_uniquecode,
+            </if>
+            <if test="insureSku != null" >
+                insure_sku,
+            </if>
+            <if test="insurePrice != null" >
+                insure_price,
+            </if>
+            <if test="insurePeriod != null" >
+                insure_period,
+            </if>
+            <if test="sumInsured != null" >
+                sum_insured,
+            </if>
+            <if test="premium != null" >
+                premium,
+            </if>
+            <if test="tradeCode != null" >
+                trade_code,
+            </if>
+            <if test="insureType != null" >
+                insure_type,
+            </if>
+            <if test="insureStatus != null" >
+                insure_status,
+            </if>
+            <if test="payDate != null" >
+                pay_date,
+            </if>
+            <if test="orderDate != null" >
+                order_date,
+            </if>
+            <if test="outDate != null" >
+                out_date,
+            </if>
+            <if test="triggerDate != null" >
+                trigger_date,
+            </if>
+            <if test="saleChannel != null" >
+                sale_channel,
+            </if>
+            <if test="insureStartDate != null" >
+                insure_start_date,
+            </if>
+            <if test="insureEndDate != null" >
+                insure_end_date,
+            </if>
+            <if test="sapDate != null" >
+                sap_date,
+            </if>
+            <if test="evidenceNo != null" >
+                evidence_no,
+            </if>
+            <if test="originOrderId != null" >
+                origin_order_id,
+            </if>
+            <if test="originGoodsUniquecode != null" >
+                origin_goods_uniquecode,
+            </if>
+            <if test="pid != null" >
+                pid,
+            </if>
+            <if test="productType != null" >
+                product_type,
+            </if>
+            <if test="createDate != null" >
+                create_date,
+            </if>
+            <if test="updateDate != null" >
+                update_date,
+            </if>
+            <if test="insurePerson != null" >
+                insure_person,
+            </if>
+            <if test="insuredPerson != null" >
+                insured_person,
+            </if>
+            <if test="insureResponse != null" >
+                insure_response,
+            </if>
+            <if test="restSumInsured != null" >
+                rest_sum_insured,
+            </if>
+            <if test="repairTimes != null" >
+                repair_times,
+            </if>
+            <if test="repairFee != null" >
+                repair_fee,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="orderId != null" >
+                #{orderId,jdbcType=BIGINT},
+            </if>
+            <if test="goodsUniquecode != null" >
+                #{goodsUniquecode,jdbcType=VARCHAR},
+            </if>
+            <if test="userId != null" >
+                #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="userName != null" >
+                #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="userTel != null" >
+                #{userTel,jdbcType=VARCHAR},
+            </if>
+            <if test="goodsName != null" >
+                #{goodsName,jdbcType=VARCHAR},
+            </if>
+            <if test="goodsSku != null" >
+                #{goodsSku,jdbcType=INTEGER},
+            </if>
+            <if test="goodsPrice != null" >
+                #{goodsPrice,jdbcType=DECIMAL},
+            </if>
+            <if test="insureUniquecode != null" >
+                #{insureUniquecode,jdbcType=VARCHAR},
+            </if>
+            <if test="insureSku != null" >
+                #{insureSku,jdbcType=INTEGER},
+            </if>
+            <if test="insurePrice != null" >
+                #{insurePrice,jdbcType=DECIMAL},
+            </if>
+            <if test="insurePeriod != null" >
+                #{insurePeriod,jdbcType=TIMESTAMP},
+            </if>
+            <if test="sumInsured != null" >
+                #{sumInsured,jdbcType=DECIMAL},
+            </if>
+            <if test="premium != null" >
+                #{premium,jdbcType=DECIMAL},
+            </if>
+            <if test="tradeCode != null" >
+                #{tradeCode,jdbcType=BIGINT},
+            </if>
+            <if test="insureType != null" >
+                #{insureType,jdbcType=TINYINT},
+            </if>
+            <if test="insureStatus != null" >
+                #{insureStatus,jdbcType=TINYINT},
+            </if>
+            <if test="payDate != null" >
+                #{payDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="orderDate != null" >
+                #{orderDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="outDate != null" >
+                #{outDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="triggerDate != null" >
+                #{triggerDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="saleChannel != null" >
+                #{saleChannel,jdbcType=INTEGER},
+            </if>
+            <if test="insureStartDate != null" >
+                #{insureStartDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="insureEndDate != null" >
+                #{insureEndDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="sapDate != null" >
+                #{sapDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="evidenceNo != null" >
+                #{evidenceNo,jdbcType=VARCHAR},
+            </if>
+            <if test="originOrderId != null" >
+                #{originOrderId,jdbcType=BIGINT},
+            </if>
+            <if test="originGoodsUniquecode != null" >
+                #{originGoodsUniquecode,jdbcType=VARCHAR},
+            </if>
+            <if test="pid != null" >
+                #{pid,jdbcType=BIGINT},
+            </if>
+            <if test="productType != null" >
+                #{productType,jdbcType=INTEGER},
+            </if>
+            <if test="createDate != null" >
+                #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateDate != null" >
+                #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="insurePerson != null" >
+                #{insurePerson,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="insuredPerson != null" >
+                #{insuredPerson,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="insureResponse != null" >
+                #{insureResponse,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="restSumInsured != null" >
+                #{restSumInsured},
+            </if>
+            <if test="repairTimes != null" >
+                #{repairTimes},
+            </if>
+            <if test="repairFee != null" >
+                #{repairFee},
+            </if>
+        </trim>
+    </insert>
+</mapper>

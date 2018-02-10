@@ -1,0 +1,20 @@
+ds:
+  filters: stat
+  maxActive: 90
+  initialSize: 10
+  maxWait: 60000
+  minIdle: 1
+  maxIdle: 90
+  timeBetweenEvictionRunsMillis: 60000
+  minEvictableIdleTimeMillis: 300000
+  validationQuery: select 'x'
+  testWhileIdle: true
+  testOnBorrow: false
+  testOnReturn: false
+  poolPreparedStatements: true
+  maxOpenPreparedStatements: 20
+logging:
+  pattern:
+    console: "%yellow(%d{yyyy-MM-dd HH:mm:ss.SSS}) %blue([%thread]) %highlight(%5level) %cyan(%logger{20}) %msg %n"
+
+

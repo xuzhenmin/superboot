@@ -1,0 +1,118 @@
+{
+  "properties": [
+    {
+      "name": "ds.min.slave.url",
+      "type": "java.lang.String",
+      "description": "Description for ds.min.slave.url."
+    },
+    {
+      "name": "ds.min.slave.username",
+      "type": "java.lang.String",
+      "description": "Description for ds.min.slave.username."
+    },
+    {
+      "name": "ds.min.slave.password",
+      "type": "java.lang.String",
+      "description": "Description for ds.min.slave.password."
+    },
+    {
+      "name": "ds.min.slave.platform",
+      "type": "java.lang.String",
+      "description": "Description for ds.min.slave.platform."
+    },
+    {
+      "name": "ds.filters",
+      "type": "java.lang.String",
+      "description": "Description for ds.filters."
+    },
+    {
+      "name": "ds.maxActive",
+      "type": "java.lang.String",
+      "description": "Description for ds.maxActive."
+    },
+    {
+      "name": "ds.initialSize",
+      "type": "java.lang.String",
+      "description": "Description for ds.initialSize."
+    },
+    {
+      "name": "ds.maxWait",
+      "type": "java.lang.String",
+      "description": "Description for ds.maxWait."
+    },
+    {
+      "name": "ds.minIdle",
+      "type": "java.lang.String",
+      "description": "Description for ds.minIdle."
+    },
+    {
+      "name": "ds.maxIdle",
+      "type": "java.lang.String",
+      "description": "Description for ds.maxIdle."
+    },
+    {
+      "name": "ds.timeBetweenEvictionRunsMillis",
+      "type": "java.lang.String",
+      "description": "Description for ds.timeBetweenEvictionRunsMillis."
+    },
+    {
+      "name": "ds.minEvictableIdleTimeMillis",
+      "type": "java.lang.String",
+      "description": "Description for ds.minEvictableIdleTimeMillis."
+    },
+    {
+      "name": "ds.validationQuery",
+      "type": "java.lang.String",
+      "description": "Description for ds.validationQuery."
+    },
+    {
+      "name": "ds.testWhileIdle",
+      "type": "java.lang.String",
+      "description": "Description for ds.testWhileIdle."
+    },
+    {
+      "name": "ds.testOnBorrow",
+      "type": "java.lang.String",
+      "description": "Description for ds.testOnBorrow."
+    },
+    {
+      "name": "ds.testOnReturn",
+      "type": "java.lang.String",
+      "description": "Description for ds.testOnReturn."
+    },
+    {
+      "name": "ds.poolPreparedStatements",
+      "type": "java.lang.String",
+      "description": "Description for ds.poolPreparedStatements."
+    },
+    {
+      "name": "ds.maxOpenPreparedStatements",
+      "type": "java.lang.String",
+      "description": "Description for ds.maxOpenPreparedStatements."
+    },
+    {
+      "name": "spring.dubbo.appname ",
+      "type": "java.lang.String",
+      "description": "Description for spring.dubbo.appname ."
+    },
+    {
+      "name": "spring.dubbo.registry ",
+      "type": "java.lang.String",
+      "description": "Description for spring.dubbo.registry ."
+    },
+    {
+      "name": "spring.dubbo.protocol ",
+      "type": "java.lang.String",
+      "description": "Description for spring.dubbo.protocol ."
+    },
+    {
+      "name": "spring.dubbo.port ",
+      "type": "java.lang.String",
+      "description": "Description for spring.dubbo.port ."
+    },
+    {
+      "name": "spring.dubbo.version ",
+      "type": "java.lang.String",
+      "description": "Description for spring.dubbo.version ."
+    }
+  ] }
