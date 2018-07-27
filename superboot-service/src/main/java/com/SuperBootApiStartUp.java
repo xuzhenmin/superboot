@@ -1,6 +1,5 @@
 package com;
 
-import com.alibaba.boot.dubbo.annotation.EnableDubboConfiguration;
 import com.zhenmin.superboot.common.constant.ConfigConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,7 +21,6 @@ import java.util.Arrays;
 @ComponentScan( {ConfigConstants.REG_BEAN_SCAN})
 //@ImportResource(locations = {"classpath:application-bean.xml"})
 @EnableAsync
-@EnableDubboConfiguration
 public class SuperBootApiStartUp extends SpringBootServletInitializer {
 	
 	private static final Logger log = LoggerFactory.getLogger(SuperBootApiStartUp.class);
