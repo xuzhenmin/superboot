@@ -67,8 +67,9 @@ public abstract class AbstractGuavaCacheStore extends BootLogUtil {
      * 在异常情况下，本机缓存更新失败
      *
      * @param myCacheKey
+     * @param bizKey     业务Key
      */
-    public void refreshIfNeed(String myCacheKey) {
+    public void refreshIfNeed(String myCacheKey, String bizKey) {
         //空标识不需要强制刷新
         if (StringUtils.isBlank(getCacheMark()) && StringUtils.isBlank(myCacheKey)) {
             return;
@@ -79,7 +80,11 @@ public abstract class AbstractGuavaCacheStore extends BootLogUtil {
             try {
                 if (!StringUtils.equals(getCacheMark(), myCacheKey)) {
                     //更新缓存
-                    refreshCache(myCacheKey);
+                    if (StringUtils.isNotBlank(bizKey)) {
+                        refreshCache(buildCacheKey(myCacheKey, bizKey));
+                    } else {
+                        refreshCache(myCacheKey);
+                    }
                 }
             } catch (Exception e) {
                 LOGGER.error("refresh cache error:{}", e);

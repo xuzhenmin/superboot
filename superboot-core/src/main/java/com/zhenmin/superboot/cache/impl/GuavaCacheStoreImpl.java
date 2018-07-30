@@ -4,14 +4,12 @@
  */
 package com.zhenmin.superboot.cache.impl;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.Executors;
 
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
-import com.google.common.collect.Lists;
 import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.ListenableFuture;
 import com.google.common.util.concurrent.ListenableFutureTask;
@@ -22,7 +20,6 @@ import com.zhenmin.superboot.cache.CacheStore;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.util.CollectionUtils;
 
 import static java.util.concurrent.TimeUnit.MINUTES;
 
@@ -42,7 +39,7 @@ import static java.util.concurrent.TimeUnit.MINUTES;
  * @author zhenmin
  * @version $Id: GuavaCacheStoreImpl.java, v 0.1 2018-07-24 下午4:49 zhenmin Exp $$
  */
-public class GuavaCacheStoreImpl extends AbstractGuavaCacheStore implements CacheStore {
+public class GuavaCacheStoreImpl<T> extends AbstractGuavaCacheStore implements CacheStore {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(GuavaCacheStoreImpl.class);
 
@@ -55,7 +52,7 @@ public class GuavaCacheStoreImpl extends AbstractGuavaCacheStore implements Cach
      *
      * TODO 要注意Optional能否被序列化，并注意该类构造方法为private的影响。
      */
-    private LoadingCache<String, Optional<List<String>>> locCache;
+    private LoadingCache<String, Optional<T>> locCache;
 
     /**
      * guava事件处理类
@@ -71,18 +68,18 @@ public class GuavaCacheStoreImpl extends AbstractGuavaCacheStore implements Cach
 
         // 初始化Guava缓存
         locCache = CacheBuilder.newBuilder().maximumSize(10).refreshAfterWrite(10, MINUTES)
-            .build(new CacheLoader<String, Optional<List<String>>>() {
+            .build(new CacheLoader<String, Optional<T>>() {
                 @Override
-                public Optional<List<String>> load(final String key) throws Exception {
+                public Optional<T> load(final String key) throws Exception {
                     return initData(key);
                 }
 
                 @Override
-                public ListenableFuture<Optional<List<String>>> reload(final String key, Optional<List<String>> oldData)
+                public ListenableFuture<Optional<T>> reload(final String key, Optional<T> oldData)
                     throws Exception {
-                    CacheRefresh<Optional<List<String>>> cacheRefresh = needRefresh(key);
+                    CacheRefresh<Optional<T>> cacheRefresh = needRefresh(key);
                     if (cacheRefresh.getNeedRefresh()) {
-                        ListenableFutureTask<Optional<List<String>>> task = ListenableFutureTask.create(
+                        ListenableFutureTask<Optional<T>> task = ListenableFutureTask.create(
                             () -> loadData(key, oldData));
                         executor.execute(task);
                         return task;
@@ -105,21 +102,21 @@ public class GuavaCacheStoreImpl extends AbstractGuavaCacheStore implements Cach
      * @param key
      * @return
      */
-    private Optional<List<String>> initData(String key) {
-        Optional<List<String>> cacheData = Optional.empty();
+    private Optional<T> initData(String key) {
+        Optional<T> cacheData = Optional.empty();
         try {
             String redisKey = buildCacheKey(REDIS_CACHE_PREFIX, key);
             //读取共享缓存,共享缓存不存在，读取DB
-            List<String> data = loadDataFromRedis(redisKey);
-            if (CollectionUtils.isEmpty(data)) {
+            T data = loadDataFromRedis(redisKey);
+            if (data == null) {
                 data = loadDataFromDB();
-                if (!CollectionUtils.isEmpty(data)) {
+                if (data != null) {
                     cacheData = Optional.of(data);
                     //将DB数据放入共享缓存
                     putData2Redis(redisKey, data);
                 } else {
-                    //放置空对象到redis，防止缓存击穿
-                    putData2Redis(redisKey, Lists.newArrayList());
+                    //放置空对象到redis，防止缓存击穿 Optional<T>
+                    putData2Redis(redisKey, null);
                 }
             }
         } catch (Exception e) {
@@ -128,9 +125,9 @@ public class GuavaCacheStoreImpl extends AbstractGuavaCacheStore implements Cach
         return cacheData;
     }
 
-    private Optional<List<String>> loadData(String key, Optional<List<String>> oldData) {
+    private Optional<T> loadData(String key, Optional<T> oldData) {
 
-        Optional<List<String>> optional = Optional.empty();
+        Optional<T> optional = Optional.empty();
         try {
             //从DB加载数据
             String lockKey = buildCacheKey(LOCK_KEY, key);
@@ -139,7 +136,7 @@ public class GuavaCacheStoreImpl extends AbstractGuavaCacheStore implements Cach
             try {
                 if (lock) {
                     //读取DB
-                    List<String> data = loadDataFromDB();
+                    T data = loadDataFromDB();
                     optional = Optional.of(data);
                     String redisKey = buildCacheKey(REDIS_CACHE_PREFIX, key);
                     //缓存到Redis
@@ -166,17 +163,17 @@ public class GuavaCacheStoreImpl extends AbstractGuavaCacheStore implements Cach
         return optional;
     }
 
-    private List<String> loadDataFromRedis(String redisKey) {
+    private T loadDataFromRedis(String redisKey) {
         //读取共享缓存
-        return Lists.newArrayList();
+        return null;
     }
 
-    private List<String> loadDataFromDB() {
+    private T loadDataFromDB() {
         //从DB加载数据
-        return Lists.newArrayList();
+        return null;
     }
 
-    private void putData2Redis(String redisKey, List<String> data) {
+    private void putData2Redis(String redisKey, T data) {
         //更新共享缓存
     }
 
@@ -207,13 +204,13 @@ public class GuavaCacheStoreImpl extends AbstractGuavaCacheStore implements Cach
      *
      * @return
      */
-    private CacheRefresh<Optional<List<String>>> needRefresh(String key) {
+    private CacheRefresh<Optional<T>> needRefresh(String key) {
         boolean need = false;
-        Optional<List<String>> optional = Optional.empty();
+        Optional<T> optional = Optional.empty();
         try {
             String redisKey = buildCacheKey(REDIS_CACHE_PREFIX, key);
-            List<String> cacheData = loadDataFromRedis(redisKey);
-            if (CollectionUtils.isEmpty(cacheData)) {
+            T cacheData = loadDataFromRedis(redisKey);
+            if (cacheData == null) {
                 need = true;
             } else {
                 optional = Optional.of(cacheData);
@@ -229,14 +226,32 @@ public class GuavaCacheStoreImpl extends AbstractGuavaCacheStore implements Cach
     }
 
     @Override
-    public List<String> queryCacheData() {
-        List<String> cacheData = Lists.newArrayList();
+    public Object queryCacheData() {
+        T cacheData = null;
         String cacheKey = "";
         try {
             //判断是否需要刷新缓存
-            refreshIfNeed(getMyCacheMark());
+            refreshIfNeed(getMyCacheMark(), null);
             cacheKey = buildCacheKey(cacheMark, CACHE_STORE_KEY);
-            Optional<List<String>> optional = locCache.get(cacheKey);
+            Optional<T> optional = locCache.get(cacheKey);
+            if (optional.isPresent()) {
+                cacheData = optional.get();
+            }
+        } catch (Exception e) {
+            logError(LOGGER, "queryCacheData cacheKey:{0}", e, cacheKey);
+        }
+        return cacheData;
+    }
+
+    @Override
+    public Object queryCacheData(String key) {
+        T cacheData = null;
+        String cacheKey = "";
+        try {
+            //判断是否需要刷新缓存
+            refreshIfNeed(getMyCacheMark(), key);
+            cacheKey = buildCacheKey(cacheMark, key);
+            Optional<T> optional = locCache.get(cacheKey);
             if (optional.isPresent()) {
                 cacheData = optional.get();
             }
@@ -262,6 +277,16 @@ public class GuavaCacheStoreImpl extends AbstractGuavaCacheStore implements Cach
         locCache.refresh(cacheKey);
     }
 
+    @Override
+    public void updateDate(String key, Object value) {
+        //更新业务数据
+        //update ....id
+        //强制刷新缓存
+        String cacheKey = buildCacheKey(getMyCacheMark(), key);
+        Optional<T> t = Optional.of((T)value);
+        locCache.put(key, t);
+    }
+
     /**
      * 强制刷新缓存标识
      *
@@ -272,6 +297,11 @@ public class GuavaCacheStoreImpl extends AbstractGuavaCacheStore implements Cach
         //getCacheMark....
         //开源的配置管理工具，如Diamond
         return "";
+    }
+
+    @Override
+    public void updateDate(String key, Object value, int expire) {
+        logError(LOGGER, "not method key:{}", key);
     }
 
     @Override
