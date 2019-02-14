@@ -17,14 +17,14 @@ import org.springframework.transaction.support.TransactionSynchronizationManager
 /**
  * 自定义事务，可实现分布式事务入口
  *
- * TODO 事务控制可以使用redis + mysql实现。redis作并发控制，mysql作持久化
+ * TODO 幂等控制可以使用redis + mysql实现。redis作并发控制，发消息到mysql作持久化
  *
  * @author zhenmin
- * @version $Id: TradeCoreTransaction.java, v 0.1 2018-07-27 下午3:28 zhenmin Exp $$
+ * @version $Id: IdempotentTransaction.java, v 0.1 2018-07-27 下午3:28 zhenmin Exp $$
  */
-public class TradeCoreTransaction extends BootLogUtil {
+public class IdempotentTransaction extends BootLogUtil {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(TradeCoreTransaction.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(IdempotentTransaction.class);
 
     /**
      * 异步任务线程池
@@ -88,7 +88,8 @@ public class TradeCoreTransaction extends BootLogUtil {
     }
 
     /**
-     * 自定义事务处理类
+     * 自定义事务处理类  #TransactionSynchronization
+     *
      * TODO 可以用过ThreadLocal记录一些上下文信息，起到在事务提交前后传递信息的作用
      */
     class AssertTransactionSync extends TransactionSynchronizationAdapter {
@@ -187,7 +188,7 @@ public class TradeCoreTransaction extends BootLogUtil {
                     //do ...
                     boolean existRedis = insertRedis(kvStore);
 
-                    //如果写入redis成功，认<<初次>>
+                    //如果写入redis成功，认为是<<初次>>
                     if (existRedis) {
                         kvStore.setExecuteFuture(true);
                         kvStore.setInsertRedis(true);
